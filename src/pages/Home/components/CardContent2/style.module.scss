@@ -1,0 +1,79 @@
+@import "../../../../styles/base.scss";
+
+.text-wrapper {
+  > h2 {
+    color: $primary-text;
+  }
+  > p {
+    color: $secondary-text;
+  }
+}
+
+.card-wrapper {
+  display: flex;
+  gap: 20px;
+  @include media-screen-xs {
+    flex-direction: column;
+  }
+}
+
+.card-wrapper {
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border: 2px solid $secondary-background;
+    width: 100%;
+    height: 140px;
+    border-radius: 5px;
+    margin-top: 50px;
+
+    .name {
+      @include name;
+    }
+
+    .price {
+      @include desc;
+    }
+
+    .discount {
+      @include name;
+      font-weight: 100;
+      font-size: 10px;
+    }
+
+    @include media-screen-xs {
+      margin-top: 5px;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      gap: 20px;
+      height: 100px;
+    }
+    > img {
+      max-width: 40px;
+    }
+  }
+}
+
+.toggle-wrapper {
+  background-color: $secondary-background;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  border-radius: 5px;
+  height: 40px;
+  color: $secondary-text;
+  font-family: $ubuntu;
+  margin-bottom: 101px;
+  @include media-screen-xs {
+    margin-bottom: 0px;
+  }
+}
+
+.button-desktop {
+  @include media-screen-xs {
+    display: none;
+  }
+}

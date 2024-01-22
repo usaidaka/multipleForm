@@ -1,0 +1,34 @@
+@import "./styles/base.scss";
+
+.core-container {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-background;
+
+  @include media-screen-xs {
+    background-size: contain;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .desktop-wrapper {
+    display: flex;
+    background-color: white;
+    height: 500px;
+    width: 800px;
+    padding: 10px;
+    border-radius: 15px;
+
+    @include media-screen-xs {
+      align-items: center;
+      flex-direction: column;
+      background-image: url("./assets/bg-sidebar-mobile.svg");
+      background-repeat: no-repeat;
+      background-color: $primary-background;
+      background-size: contain;
+    }
+  }
+}

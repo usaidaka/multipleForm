@@ -1,0 +1,64 @@
+@import "../../../../styles/base.scss";
+.text-wrapper {
+  > h2 {
+    color: $primary-text;
+  }
+  > p {
+    color: $secondary-text;
+  }
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 57px;
+  @include media-screen-xs {
+    margin-bottom: 0px;
+  }
+
+  @include media-screen-xs {
+    margin-top: 5px;
+  }
+
+  .check-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    input {
+      width: 20px;
+      height: 20px;
+      @include media-screen-xs {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    .name {
+      @include name;
+    }
+
+    .price {
+      @include desc;
+    }
+  }
+
+  .card {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid $secondary-background;
+    border-radius: 5px;
+  }
+}
+
+.button-desktop {
+  @include media-screen-xs {
+    display: none;
+  }
+}

@@ -1,0 +1,39 @@
+@import "../../../../styles/base.scss";
+
+.text-wrapper {
+  > h2 {
+    color: $primary-text;
+  }
+  > p {
+    color: $secondary-text;
+  }
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: $primary-background;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 95px;
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title-wrapper {
+      .name {
+        color: $primary-text;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.button-desktop {
+  @include media-screen-xs {
+    display: none;
+  }
+}

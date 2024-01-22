@@ -1,0 +1,40 @@
+@import "../../../../styles/base.scss";
+
+.text-wrapper {
+  > h2 {
+    color: $primary-text;
+  }
+  > p {
+    color: $secondary-text;
+  }
+}
+
+.form-wrapper {
+  @include media-screen-xs {
+    margin-bottom: 0px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    label {
+      color: $primary-text;
+    }
+
+    input {
+      border: 1px solid $secondary-text;
+      height: 35px;
+      border-radius: 5px;
+      padding-left: 5px;
+    }
+  }
+}
+
+.button-desktop {
+  margin-top: 100px;
+  @include media-screen-xs {
+    display: none;
+  }
+}

@@ -1,0 +1,8 @@
+@mixin name {
+  color: $primary-text;
+  font-weight: 600;
+}
+
+@mixin desc {
+  color: $secondary-text;
+}

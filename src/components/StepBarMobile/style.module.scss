@@ -1,0 +1,32 @@
+@import "../../styles/base.scss";
+
+.step-container {
+  display: none;
+
+  @include media-screen-xs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: 30px;
+    gap: 35px;
+
+    .step {
+      width: 30px;
+      height: 30px;
+      border: 2px solid $primary-background;
+      border-radius: 100%;
+      color: white;
+      text-align: center;
+    }
+    .active {
+      background-color: $primary-background;
+      color: black;
+      width: 30px;
+      height: 30px;
+      border: 2px solid $primary-background;
+      border-radius: 100%;
+      text-align: center;
+    }
+  }
+}

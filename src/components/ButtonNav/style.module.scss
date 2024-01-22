@@ -1,0 +1,15 @@
+@import "../../styles/base.scss";
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .next {
+    background-color: $primary-text;
+  }
+
+  .back {
+    color: $secondary-text;
+  }
+}
