@@ -2,18 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import classes from "./style.module.scss";
 import ButtonNav from "../../../../components/ButtonNav";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { setUserData } from "../../action";
 
 const CardContentOne = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.homeReducer.userData);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(userData.name || "");
+  const [email, setEmail] = useState(userData.email || "");
+  const [phone, setPhone] = useState(userData.phone || "");
 
   const onSubmit = () => {
-    dispatch(setUserData({ name, email, phone }));
+    dispatch(setUserData({ ...userData, name, email, phone }));
   };
 
   useEffect(() => {
@@ -28,6 +27,8 @@ const CardContentOne = () => {
     }
   });
 
+  console.log(!name || !email || !phone);
+
   return (
     <>
       <div className={classes["text-wrapper"]}>
@@ -35,7 +36,7 @@ const CardContentOne = () => {
         <p>Please provide your name, email address, and phone number</p>
       </div>
       <div className={classes["form-wrapper"]}>
-        <form action="" onSubmit={onSubmit}>
+        <div action="" onSubmit={onSubmit}>
           <div className={classes.form}>
             <label htmlFor="">Name</label>
             <input
@@ -65,9 +66,13 @@ const CardContentOne = () => {
           </div>
 
           <div className={classes["button-desktop"]}>
-            <ButtonNav action={onSubmit} />
+            {!name || !email || !phone ? (
+              <ButtonNav disable={true} />
+            ) : (
+              <ButtonNav action={onSubmit} />
+            )}
           </div>
-        </form>
+        </div>
       </div>
     </>
   );

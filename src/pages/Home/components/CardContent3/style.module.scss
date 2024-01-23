@@ -68,6 +68,7 @@
 
 .button-desktop {
   @include media-screen-xs {
-    display: none;
+    display: block;
+    margin-top: 20px;
   }
 }

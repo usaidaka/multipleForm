@@ -6,7 +6,6 @@ import CardContentTwo from "./components/CardContent2";
 import CardContentThree from "./components/CardContent3";
 import CardContentFour from "./components/CardContent4";
 import CardContentFive from "./components/CardContent5";
-import classes from "./style.module.scss";
 
 const Home = () => {
   const currentStep = useSelector((state) => state.homeReducer.step);
@@ -32,13 +31,6 @@ const Home = () => {
   return (
     <>
       <CardForm>{renderComponent()}</CardForm>
-      <div
-        className={
-          currentStep === 5 ? classes.stepFive : classes["button-mobile"]
-        }
-      >
-        <ButtonNav />
-      </div>
     </>
   );
 };

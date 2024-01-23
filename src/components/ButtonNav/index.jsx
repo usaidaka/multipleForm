@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./style.module.scss";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setStep } from "../../pages/Home/action";
 
-const ButtonNav = ({ action = () => {} }) => {
+const ButtonNav = ({ action = () => {}, disable }) => {
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.homeReducer.step);
 
@@ -18,7 +18,12 @@ const ButtonNav = ({ action = () => {} }) => {
   return (
     <div className={classes["button-wrapper"]}>
       {currentStep !== 1 ? (
-        <Button onClick={() => onPrevStep()} className={classes.back}>
+        <Button
+          onClick={() => {
+            onPrevStep();
+          }}
+          className={classes.back}
+        >
           back
         </Button>
       ) : (
@@ -32,6 +37,7 @@ const ButtonNav = ({ action = () => {} }) => {
         variant="contained"
         className={classes.next}
         type="submit"
+        disabled={disable}
       >
         next step
       </Button>

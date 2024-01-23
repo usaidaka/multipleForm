@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./style.module.scss";
 import arcade from "../../../../assets/icon-arcade.svg";
 import advance from "../../../../assets/icon-advanced.svg";
@@ -41,32 +41,57 @@ const cardData = [
   },
 ];
 const CardContentTwo = () => {
-  const userData = useSelector((state) => state.homeReducer.userData);
-  const [isYearly, setIsYearly] = useState(userData.isYearly || false);
-  const [selectedCard, setSelectedCard] = useState(userData.noPlan || null);
+  const userData = useSelector((state) => state.homeReducer?.userData);
+  const [isYearly, setIsYearly] = useState(
+    userData.dataPlan?.isYearly || false
+  );
+  const [selectedCard, setSelectedCard] = useState(
+    userData.dataPlan?.idPlan || null
+  );
   const [dataPlan, setDataPlan] = useState(
-    { name: userData.name, email: userData.email, phone: userData.phone } || {}
+    {
+      idPlan: userData.dataPlan?.idPlan,
+      plan: userData.dataPlan?.plan,
+      price: userData.dataPlan?.price,
+      isYearly: userData.dataPlan?.isYearly,
+    } || {}
   );
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    dispatch(setUserData(dataPlan));
+    dispatch(setUserData({ ...userData, dataPlan: dataPlan }));
   };
 
   const handleCardClick = (index) => {
     setSelectedCard(index);
   };
 
-  const handleColectData = (noPlan, name, price, yearlyPrice) => {
+  const handleColectData = (idPlan, name, price, yearlyPrice) => {
     setDataPlan({
-      ...userData,
-      noPlan: noPlan,
+      idPlan: idPlan,
       plan: name,
       price: `${isYearly ? yearlyPrice : price}`,
       isYearly: isYearly,
     });
   };
-  console.log(userData);
+
+  useEffect(() => {
+    if (userData.dataPlan?.isYearly) {
+      setIsYearly(userData.dataPlan?.isYearly);
+    }
+    if (userData.dataPlan?.idPlan) {
+      setSelectedCard(userData.dataPlan?.idPlan);
+    }
+    if (userData.name && userData.email && userData.phone) {
+      setDataPlan({
+        idPlan: userData.dataPlan?.idPlan,
+        plan: userData.dataPlan?.plan,
+        price: userData.dataPlan?.price,
+        isYearly: userData.dataPlan?.isYearly,
+      });
+    }
+  }, []);
+
   return (
     <>
       <div className={classes["text-wrapper"]}>
@@ -115,7 +140,11 @@ const CardContentTwo = () => {
         />
       </div>
       <div className={classes["button-desktop"]}>
-        <ButtonNav action={onSubmit} />
+        {!selectedCard || !dataPlan ? (
+          <ButtonNav disable={true} />
+        ) : (
+          <ButtonNav action={onSubmit} />
+        )}
       </div>
     </>
   );

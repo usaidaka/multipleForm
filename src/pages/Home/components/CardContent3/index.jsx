@@ -27,14 +27,17 @@ const cardData = [
 
 const CardContentThree = () => {
   const userData = useSelector((state) => state.homeReducer.userData);
+  const dispatch = useDispatch();
 
-  const initialSelected = userData.addOns.map((item) => {
-    return item.noAddOns;
-  });
+  let initialSelected = [];
+  if (userData?.addOns) {
+    initialSelected = userData?.addOns.map((item) => {
+      return item.idAddOns;
+    });
+  }
 
   const [selectedCards, setSelectedCards] = useState(initialSelected || []);
   const [addOnsData, setAddOnsData] = useState([]);
-  const dispatch = useDispatch();
 
   const handleCheckboxChange = (item) => {
     if (selectedCards.includes(item.no)) {
@@ -54,7 +57,7 @@ const CardContentThree = () => {
     const data = cardData
       .filter((item) => selectedCards.includes(item.no))
       .map((item) => ({
-        noAddOns: item.no,
+        idAddOns: item.no,
         title: item.title,
         desc: item.desc,
         priceAddOns: item.price,
