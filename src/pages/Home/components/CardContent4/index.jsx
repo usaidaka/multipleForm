@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./style.module.scss";
 import ButtonNav from "../../../../components/ButtonNav";
+import { useSelector } from "react-redux";
 
 const cardData = [
   {
@@ -14,6 +15,9 @@ const cardData = [
 ];
 
 const CardContentFour = () => {
+  const userData = useSelector((state) => state.homeReducer.userData);
+
+  console.log(userData);
   return (
     <>
       <div className={classes["text-wrapper"]}>

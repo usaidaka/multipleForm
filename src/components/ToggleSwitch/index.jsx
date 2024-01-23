@@ -48,13 +48,17 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function ToggleSwitch({ year, month, getter, setter }) {
+export default function ToggleSwitch({ year, month, getter, setter, reset }) {
   return (
     <Stack direction="row" spacing={1} alignItems="center">
       <p className={getter ? null : classes.isSelected}>{month}</p>
       <AntSwitch
-        onClick={() => setter(!getter)}
+        onClick={() => {
+          setter(!getter);
+          reset(null);
+        }}
         inputProps={{ "aria-label": "ant design" }}
+        checked={getter}
       />
       <p className={getter ? classes.isSelected : null}>{year}</p>
     </Stack>

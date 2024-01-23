@@ -5,7 +5,8 @@ import advance from "../../../../assets/icon-advanced.svg";
 import pro from "../../../../assets/icon-pro.svg";
 import ToggleSwitch from "../../../../components/ToggleSwitch";
 import ButtonNav from "../../../../components/ButtonNav";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../action";
 
 const cardData = [
   {
@@ -40,9 +41,32 @@ const cardData = [
   },
 ];
 const CardContentTwo = () => {
-  const [isYearly, setIsYearly] = useState(false);
   const userData = useSelector((state) => state.homeReducer.userData);
+  const [isYearly, setIsYearly] = useState(userData.isYearly || false);
+  const [selectedCard, setSelectedCard] = useState(userData.noPlan || null);
+  const [dataPlan, setDataPlan] = useState(
+    { name: userData.name, email: userData.email, phone: userData.phone } || {}
+  );
+  const dispatch = useDispatch();
 
+  const onSubmit = () => {
+    dispatch(setUserData(dataPlan));
+  };
+
+  const handleCardClick = (index) => {
+    setSelectedCard(index);
+  };
+
+  const handleColectData = (noPlan, name, price, yearlyPrice) => {
+    setDataPlan({
+      ...userData,
+      noPlan: noPlan,
+      plan: name,
+      price: `${isYearly ? yearlyPrice : price}`,
+      isYearly: isYearly,
+    });
+  };
+  console.log(userData);
   return (
     <>
       <div className={classes["text-wrapper"]}>
@@ -51,7 +75,21 @@ const CardContentTwo = () => {
       </div>
       <div className={classes["card-wrapper"]}>
         {cardData.map((item) => (
-          <div key={item.no} className={classes.card}>
+          <div
+            key={item.no}
+            className={`${classes.card} ${
+              selectedCard === item.no ? classes.selected : ""
+            }`}
+            onClick={() => {
+              handleCardClick(item.no);
+              handleColectData(
+                item.no,
+                item.name,
+                item.price,
+                item.yearly.price
+              );
+            }}
+          >
             <img src={item.logo} alt="" />
             <div>
               <p className={classes.name}>{item.name}</p>
@@ -73,10 +111,11 @@ const CardContentTwo = () => {
           year={"Yearly"}
           getter={isYearly}
           setter={setIsYearly}
+          reset={setSelectedCard}
         />
       </div>
       <div className={classes["button-desktop"]}>
-        <ButtonNav />
+        <ButtonNav action={onSubmit} />
       </div>
     </>
   );

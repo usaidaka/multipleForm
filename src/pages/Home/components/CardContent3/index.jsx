@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./style.module.scss";
 import ButtonNav from "../../../../components/ButtonNav";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../action";
+
 const cardData = [
   {
     no: 1,
-    title: "Online service",
+    title: "Online Service",
     desc: "Access to multiplayer games",
     price: "+$1/mo",
   },
@@ -16,23 +19,77 @@ const cardData = [
   },
   {
     no: 3,
-    title: "Customizable profile",
+    title: "Customizable Profile",
     desc: "Custom theme on your profile",
     price: "+$2/mo",
   },
 ];
+
 const CardContentThree = () => {
+  const userData = useSelector((state) => state.homeReducer.userData);
+
+  const initialSelected = userData.addOns.map((item) => {
+    return item.noAddOns;
+  });
+
+  const [selectedCards, setSelectedCards] = useState(initialSelected || []);
+  const [addOnsData, setAddOnsData] = useState([]);
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = (item) => {
+    if (selectedCards.includes(item.no)) {
+      setSelectedCards(
+        selectedCards.filter((selected) => selected !== item.no)
+      );
+    } else {
+      setSelectedCards([...selectedCards, item.no]);
+    }
+  };
+
+  useEffect(() => {
+    handleCollectData();
+  }, [selectedCards]);
+
+  const handleCollectData = () => {
+    const data = cardData
+      .filter((item) => selectedCards.includes(item.no))
+      .map((item) => ({
+        noAddOns: item.no,
+        title: item.title,
+        desc: item.desc,
+        priceAddOns: item.price,
+      }));
+    setAddOnsData(data);
+  };
+
+  const onSubmit = () => {
+    dispatch(setUserData({ ...userData, addOns: addOnsData }));
+  };
+
   return (
     <>
       <div className={classes["text-wrapper"]}>
-        <h2>Select Your Plan</h2>
-        <p>You have the option of monthly or yearly billing</p>
+        <h2>Pick Add-ons</h2>
+        <p>Add-ons enhance your gaming experience</p>
       </div>
       <div className={classes["card-wrapper"]}>
         {cardData.map((item) => (
-          <div key={item.no} className={classes.card}>
+          <div
+            key={item.no}
+            className={`${classes.card} ${
+              selectedCards.includes(item.no) ? classes.selected : ""
+            }`}
+          >
             <div className={classes["check-wrapper"]}>
-              <input type="checkbox" name="" id="" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                checked={selectedCards.includes(item.no)}
+                onChange={() => {
+                  handleCheckboxChange(item);
+                }}
+              />
               <div>
                 <p className={classes.name}>{item.title}</p>
                 <p className={classes.price}>{item.desc}</p>
@@ -43,7 +100,7 @@ const CardContentThree = () => {
         ))}
       </div>
       <div className={classes["button-desktop"]}>
-        <ButtonNav />
+        <ButtonNav action={onSubmit} />
       </div>
     </>
   );
